@@ -28,11 +28,23 @@ In this project you will create a login page and request a token from the server
 
 Demonstrate your understanding of this Sprint's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
-- [ ] Explain what a token is used for.
-- [ ] What steps can you take in your web apps to keep your data secure?
-- [ ] Describe how web servers work.
-- [ ] Which HTTP methods can be mapped to the CRUD acronym that we use when interfacing with APIs/Servers.
+- [x] Explain what a token is used for.
+```
+Verifying users when logging in / accessing content.
+```
+- [x] What steps can you take in your web apps to keep your data secure?
+```
+Tools / API such as localStorage to assist us in storing important information for authentication. If we're using react, we can use tools from 'react-router-dom' like Redirect, Switch, and the history props to manage authenticated users in our applications.
+```
+- [x] Describe how web servers work.
+```
+Web servers are hosted backends on a computer machine / VM that will assist in hosting some data via a programmable interface.
+```
+- [x] Which HTTP methods can be mapped to the CRUD acronym that we use when interfacing with APIs/Servers.
 
+```
+GET, POST, PUT, DELETE
+```
 
 ## Project Set Up
 
