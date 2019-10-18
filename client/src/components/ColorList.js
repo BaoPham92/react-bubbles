@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { axiosWithAuth } from './utils/axiosWithAuth';
 
 const initialColor = {
@@ -28,21 +27,26 @@ const ColorList = ({ colors, updateColors }) => {
     .then(res => {
       // * REMOVE THE PREVIOUS COLOR OF THE ONE WE'RE EDITING
       const newColors = colors.filter(color => color.id !== colorToEdit.id)
-
-      // * UPDATE LIST
+      // * UPDATE LIST WITH PROVIDED UPDATE SETTER
       res && updateColors([...newColors, res.data])
     })
     .catch(err => console.log(err))
   };
 
   const deleteColor = color => {
-    // make a delete request to delete this color
-    const newColors = colors.filter(item => item.id !== color.id)
 
-    updateColors(newColors)
+    // * DELETE CALL
+    axiosWithAuth().delete(`/api/colors/${color.id}`)
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+
+    // * CALL CURRENT LIST OF DATA AND UPDATE
+    axiosWithAuth().get('/api/colors')
+    .then(res => updateColors(res.data))
+    .catch(err => console.log(err))
 
     // ! LOG DATA
-    // console.log(color, newColors)
+    // console.log(color)
   };
 
   console.log(colorToEdit)
