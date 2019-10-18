@@ -37,7 +37,12 @@ const ColorList = ({ colors, updateColors }) => {
 
   const deleteColor = color => {
     // make a delete request to delete this color
-    console.log(color)
+    const newColors = colors.filter(item => item.id !== color.id)
+
+    updateColors(newColors)
+
+    // ! LOG DATA
+    // console.log(color, newColors)
   };
 
   console.log(colorToEdit)
