@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { axiosWithAuth } from './utils/axiosWithAuth';
+import { Redirect } from 'react-router-dom';
 
-const Login = () => {
+const Login = (props) => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
 
@@ -10,8 +11,12 @@ const Login = () => {
     password: ''
   });
 
+  const token = localStorage.getItem('token')
+  const history = props && props.history
+
   useEffect(() => {
-    console.log('LOGIN FORM')
+    // ! LOG PROPS
+    console.log('LOGIN FORM', props)
   }, [])
 
   const handleChange = (e) => {
@@ -29,8 +34,14 @@ const Login = () => {
 
     // * CALL FOR LOGIN
     axiosWithAuth().post('api/login', credential)
-    .then(res => localStorage.setItem('token', res && res.data.payload))
-    .catch(err => console.log(err))
+      .then(res => {
+        // * SET TOKEN
+        localStorage.setItem('token', res && res.data.payload)
+
+        // * CHANGE URL
+        history.replace('/BubblePage');
+      })
+      .catch(err => console.log(err))
 
     // * RESET UPON SUBMISSION
     setCredential({
@@ -41,6 +52,11 @@ const Login = () => {
 
   // ! LOG STATE
   // console.log(credential)
+
+  // * TOKEN ALREADY EXIST, REDIRECT
+  if (!!token === true) {
+    return <Redirect to="/BubblePage" />
+  }
 
   return (
     <>
@@ -61,7 +77,7 @@ const Login = () => {
           onChange={(e) => handleChange(e)}
           value={credential.password && credential.password} />
 
-          <button>Submit</button>
+        <button>Submit</button>
       </form>
     </>
   );
